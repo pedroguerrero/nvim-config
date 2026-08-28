@@ -99,7 +99,7 @@ do
   vim.g.maplocalleader = ' '
 
   -- Set to true if you have a Nerd Font installed and selected in the terminal
-  vim.g.have_nerd_font = false
+  vim.g.have_nerd_font = true
 
   -- [[ Setting options ]]
   --  See `:help vim.o`
@@ -491,15 +491,18 @@ do
 
   -- See `:help telescope` and `:help telescope.setup()`
   require('telescope').setup {
-    -- You can put your default mappings / updates / etc. in here
-    --  All the info you're looking for is in `:help telescope.setup()`
-    --
-    -- defaults = {
-    --   mappings = {
-    --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-    --   },
-    -- },
-    -- pickers = {}
+    defaults = {
+      file_ignore_patterns = {
+        '%.git/',
+        'node_modules/',
+        'dist/',
+        'build/',
+        '%.next/',
+        'coverage/',
+        'vendor/',
+        '%.tsbuildinfo',
+      },
+    },
     extensions = {
       ['ui-select'] = { require('telescope.themes').get_dropdown() },
     },
@@ -693,7 +696,7 @@ do
   ---@type table<string, vim.lsp.Config>
   local servers = {
     -- clangd = {},
-    -- gopls = {},
+    gopls = {},
     -- pyright = {},
     -- rust_analyzer = {},
     --
@@ -701,7 +704,12 @@ do
     --    https://github.com/pmizio/typescript-tools.nvim
     --
     -- But for many setups, the LSP (`ts_ls`) will work just fine
-    -- ts_ls = {},
+    ts_ls = {},
+
+    dockerls = {},
+    docker_compose_language_service = {},
+
+    eslint = {},
 
     stylua = {}, -- Used to format Lua code
 
@@ -763,6 +771,9 @@ do
   local ensure_installed = vim.tbl_keys(servers or {})
   vim.list_extend(ensure_installed, {
     -- You can add other tools here that you want Mason to install
+    'prettierd',
+    'goimports',
+    'dockerfmt',
   })
 
   require('mason-tool-installer').setup { ensure_installed = ensure_installed }
@@ -785,8 +796,15 @@ do
     format_on_save = function(bufnr)
       -- You can specify filetypes to autoformat on save here:
       local enabled_filetypes = {
-        -- lua = true,
+        lua = true,
         -- python = true,
+        typescript = true,
+        javascript = true,
+        typescriptreact = true,
+        javascriptreact = true,
+        go = true,
+        yaml = true, -- cubre docker-compose.yml también
+        dockerfile = true,
       }
       if enabled_filetypes[vim.bo[bufnr].filetype] then
         return { timeout_ms = 500 }
@@ -804,7 +822,13 @@ do
       -- python = { "isort", "black" },
       --
       -- You can use 'stop_after_first' to run the first available formatter from the list
-      -- javascript = { "prettierd", "prettier", stop_after_first = true },
+      javascript = { 'prettierd', 'prettier', stop_after_first = true },
+      typescript = { 'prettierd', 'prettier', stop_after_first = true },
+      typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
+      javascriptreact = { 'prettierd', 'prettier', stop_after_first = true },
+      go = { 'goimports', 'gofmt' },
+      dockerfile = { 'dockerfmt' },
+      yaml = { 'prettierd', 'prettier', stop_after_first = true },
     },
   }
 
@@ -855,7 +879,7 @@ do
       -- <c-k>: Toggle signature help
       --
       -- See `:help blink-cmp-config-keymap` for defining your own keymap
-      preset = 'default',
+      preset = 'super-tab',
 
       -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
       --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
