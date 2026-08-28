@@ -251,6 +251,11 @@ do
     group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
     callback = function() vim.hl.on_yank() end,
   })
+
+  vim.keymap.set('n', '<Tab>', '<Cmd>BufferLineCycleNext<CR>', { desc = 'Next buffer' })
+  vim.keymap.set('n', '<S-Tab>', '<Cmd>BufferLineCyclePrev<CR>', { desc = 'Previous buffer' })
+  vim.keymap.set('n', '<leader>bp', '<Cmd>BufferLinePick<CR>', { desc = '[B]uffer [P]ick (saltar directo)' })
+  vim.keymap.set('n', '<leader>bd', '<Cmd>bdelete<CR>', { desc = '[B]uffer [D]elete (cerrar)' })
 end
 
 -- ============================================================
@@ -1004,6 +1009,31 @@ do
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   -- require 'custom.plugins'
+end
+
+-- ============================================================
+-- SECTION: BUFFERLINE (tabs visuales para buffers)
+-- ============================================================
+do
+  vim.pack.add { gh 'akinsho/bufferline.nvim' }
+
+  require('bufferline').setup {
+    options = {
+      mode = 'buffers', -- muestra buffers, no tabpages
+      diagnostics = 'nvim_lsp', -- muestra iconos de error/warning de LSP
+      offsets = {
+        {
+          filetype = 'NvimTree', -- ajusta si usas otro explorador de archivos
+          text = 'File Explorer',
+          text_align = 'left',
+          separator = true,
+        },
+      },
+      show_buffer_close_icons = true,
+      show_close_icon = false,
+      always_show_bufferline = true,
+    },
+  }
 end
 
 -- The line beneath this is called `modeline`. See `:help modeline`
