@@ -452,6 +452,25 @@ do
 
   -- ... and there is more!
   --  Check out: https://github.com/nvim-mini/mini.nvim
+
+  -- [[ File Explorer (nvim-tree) ]] -- added
+  vim.g.loaded_netrw = 1
+  vim.g.loaded_netrwPlugin = 1
+
+  vim.pack.add { gh 'nvim-tree/nvim-tree.lua' }
+
+  require('nvim-tree').setup {
+    sort = { sorter = 'case_sensitive' },
+    view = { width = 30 },
+    renderer = { group_empty = true },
+    filters = {
+      dotfiles = false,
+      custom = { 'node_modules', '%.git$' },
+    },
+  }
+
+  vim.keymap.set('n', '<leader>e', '<Cmd>NvimTreeToggle<CR>', { desc = 'Toggle file [E]xplorer' })
+  vim.keymap.set('n', '<leader>ef', '<Cmd>NvimTreeFindFile<CR>', { desc = '[E]xplorer [F]ind current file' })
 end
 
 -- ============================================================
@@ -1034,6 +1053,11 @@ do
       always_show_bufferline = true,
     },
   }
+
+  vim.keymap.set('n', '<Tab>', '<Cmd>BufferLineCycleNext<CR>', { desc = 'Next buffer' })
+  vim.keymap.set('n', '<S-Tab>', '<Cmd>BufferLineCyclePrev<CR>', { desc = 'Previous buffer' })
+  vim.keymap.set('n', '<leader>bp', '<Cmd>BufferLinePick<CR>', { desc = '[B]uffer [P]ick' })
+  vim.keymap.set('n', '<leader>bd', '<Cmd>bdelete<CR>', { desc = '[B]uffer [D]elete' })
 end
 
 -- The line beneath this is called `modeline`. See `:help modeline`
