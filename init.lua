@@ -1053,6 +1053,8 @@ do
   vim.keymap.set('n', '<S-Tab>', '<Cmd>BufferLineCyclePrev<CR>', { desc = 'Previous buffer' })
   vim.keymap.set('n', '<leader>bp', '<Cmd>BufferLinePick<CR>', { desc = '[B]uffer [P]ick' })
   vim.keymap.set('n', '<leader>bd', '<Cmd>bdelete<CR>', { desc = '[B]uffer [D]elete' })
+  vim.keymap.set('n', '<leader>bda', ':%bd<CR>', { desc = '[B]uffer [D]elete [A]ll' })
+  vim.keymap.set('n', '<leader>bdo', ':%bd|e#|bd#<CR>', { desc = '[B]uffer [D]elete [O]thers' })
 end
 
 -- The line beneath this is called `modeline`. See `:help modeline`
