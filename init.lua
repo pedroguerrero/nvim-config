@@ -1052,7 +1052,20 @@ do
   vim.keymap.set('n', '<Tab>', '<Cmd>BufferLineCycleNext<CR>', { desc = 'Next buffer' })
   vim.keymap.set('n', '<S-Tab>', '<Cmd>BufferLineCyclePrev<CR>', { desc = 'Previous buffer' })
   vim.keymap.set('n', '<leader>bp', '<Cmd>BufferLinePick<CR>', { desc = '[B]uffer [P]ick' })
-  vim.keymap.set('n', '<leader>bd', '<Cmd>bdelete<CR>', { desc = '[B]uffer [D]elete' })
+
+  local close_current_buffer = function()
+    local buf_to_close = vim.api.nvim_get_current_buf()
+    local alt_buf = vim.fn.bufnr '#'
+    if alt_buf ~= -1 and vim.fn.buflisted(alt_buf) == 1 then
+      vim.cmd('buffer ' .. alt_buf)
+    else
+      vim.cmd 'bnext'
+    end
+    if vim.api.nvim_get_current_buf() ~= buf_to_close then vim.cmd('bdelete ' .. buf_to_close) end
+  end
+
+  vim.keymap.set('n', '<leader>bd', close_current_buffer, { desc = '[B]uffer [D]elete' })
+  vim.keymap.set('n', '<leader>bds', close_current_buffer, { desc = '[B]uffer [D]elete [S]ingle' })
   vim.keymap.set('n', '<leader>bda', ':%bd<CR>', { desc = '[B]uffer [D]elete [A]ll' })
   vim.keymap.set('n', '<leader>bdo', ':%bd|e#|bd#<CR>', { desc = '[B]uffer [D]elete [O]thers' })
 end
