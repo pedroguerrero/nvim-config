@@ -251,6 +251,10 @@ do
     group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
     callback = function() vim.hl.on_yank() end,
   })
+
+  vim.keymap.set('n', '<leader>tl', function() vim.cmd [[%s/^\s\+//]] end, { desc = '[T]rim [L]eading whitespace' })
+  vim.keymap.set('n', '<leader>tt', function() vim.cmd [[%s/\s\+$//]] end, { desc = '[T]rim [T]railing whitespace' })
+  vim.keymap.set('n', '<leader>tb', function() vim.cmd [[g/^\s*$/d]] end, { desc = '[T]rim [B]lank lines' })
 end
 
 -- ============================================================
@@ -824,6 +828,8 @@ do
         go = true,
         yaml = true, -- cubre docker-compose.yml también
         dockerfile = true,
+        json = true,
+        jsonc = true,
       }
       if enabled_filetypes[vim.bo[bufnr].filetype] then
         return { timeout_ms = 500 }
@@ -848,6 +854,8 @@ do
       go = { 'goimports', 'gofmt' },
       dockerfile = { 'dockerfmt' },
       yaml = { 'prettierd', 'prettier', stop_after_first = true },
+      jsonc = { 'prettierd', 'prettier', stop_after_first = true },
+      json = { 'prettierd', 'prettier', stop_after_first = true },
     },
   }
 
