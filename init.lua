@@ -478,6 +478,13 @@ do
 
   vim.keymap.set('n', '<leader>e', '<Cmd>NvimTreeToggle<CR>', { desc = 'Toggle file [E]xplorer' })
   vim.keymap.set('n', '<leader>ef', '<Cmd>NvimTreeFindFile<CR>', { desc = '[E]xplorer [F]ind current file' })
+
+  do
+    vim.pack.add { gh 'sindrets/diffview.nvim' }
+
+    vim.keymap.set('n', '<leader>gd', '<Cmd>DiffviewOpen<CR>', { desc = '[G]it [D]iff view' })
+    vim.keymap.set('n', '<leader>gc', '<Cmd>DiffviewClose<CR>', { desc = '[G]it diff [C]lose' })
+  end
 end
 
 -- ============================================================
@@ -1033,7 +1040,7 @@ do
   -- require 'kickstart.plugins.lint'
   -- require 'kickstart.plugins.autopairs'
   -- require 'kickstart.plugins.neo-tree'
-  -- require 'kickstart.plugins.gitsigns' -- adds gitsigns recommended keymaps
+  require 'kickstart.plugins.gitsigns' -- adds gitsigns recommended keymaps
 
   -- NOTE: You can add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --
