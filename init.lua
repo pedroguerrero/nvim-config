@@ -363,6 +363,12 @@ do
       topdelete = { text = '‾' }, ---@diagnostic disable-line: missing-fields
       changedelete = { text = '~' }, ---@diagnostic disable-line: missing-fields
     },
+    current_line_blame = true,
+    current_line_blame_opts = {
+      virt_text = true,
+      virt_text_pos = 'eol', -- al final de la línea, como GitLens
+      delay = 300,
+    },
   }
 
   -- Useful plugin to show you pending keybinds.
