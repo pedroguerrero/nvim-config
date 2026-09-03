@@ -255,6 +255,8 @@ do
   vim.keymap.set('n', '<leader>tl', function() vim.cmd [[%s/^\s\+//]] end, { desc = '[T]rim [L]eading whitespace' })
   vim.keymap.set('n', '<leader>tt', function() vim.cmd [[%s/\s\+$//]] end, { desc = '[T]rim [T]railing whitespace' })
   vim.keymap.set('n', '<leader>tb', function() vim.cmd [[g/^\s*$/d]] end, { desc = '[T]rim [B]lank lines' })
+
+  vim.keymap.set('n', '<leader>gb', '<Cmd>Gitsigns toggle_current_line_blame<CR>', { desc = '[G]it toggle line [B]lame' })
 end
 
 -- ============================================================
