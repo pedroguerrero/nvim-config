@@ -1057,7 +1057,7 @@ do
       {
         type = 'pwa-node',
         request = 'attach',
-        name = 'Attach to NestJS (start:debug)',
+        name = 'Attach to Node (start:debug)',
         port = 9229,
         address = '127.0.0.1',
         restart = true,
