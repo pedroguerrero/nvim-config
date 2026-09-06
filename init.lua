@@ -1036,6 +1036,39 @@ do
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
   require 'kickstart.plugins.debug'
+
+  do
+    local dap = require 'dap'
+
+    dap.adapters['pwa-node'] = {
+      type = 'server',
+      host = 'localhost',
+      port = '${port}',
+      executable = {
+        command = 'node',
+        args = {
+          vim.fn.stdpath 'data' .. '/mason/packages/js-debug-adapter/js-debug/src/dapDebugServer.js',
+          '${port}',
+        },
+      },
+    }
+
+    dap.configurations.typescript = {
+      {
+        type = 'pwa-node',
+        request = 'attach',
+        name = 'Attach to NestJS (start:debug)',
+        port = 9229,
+        address = '127.0.0.1',
+        restart = true,
+        sourceMaps = true,
+        skipFiles = { '<node_internals>/**' },
+        cwd = '${workspaceFolder}',
+        protocol = 'inspector',
+      },
+    }
+  end
+
   -- require 'kickstart.plugins.indent_line'
   -- require 'kickstart.plugins.lint'
   -- require 'kickstart.plugins.autopairs'
