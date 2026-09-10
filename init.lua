@@ -391,7 +391,7 @@ do
   -- [[ Colorscheme ]]
   vim.pack.add { gh 'catppuccin/nvim' }
   require('catppuccin').setup {
-    flavour = 'mocha', -- latte, frappe, macchiato, mocha
+    flavour = 'macchiato', -- latte, frappe, macchiato, mocha
   }
 
   vim.cmd.colorscheme 'catppuccin'
