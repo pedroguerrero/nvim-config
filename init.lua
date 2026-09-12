@@ -463,6 +463,15 @@ do
       dotfiles = false,
       custom = { 'node_modules', '%.git$' },
     },
+    on_attach = function(bufnr)
+      local api = require 'nvim-tree.api'
+
+      -- Carga todos los keymaps por defecto primero (para no perder los que ya tienes)
+      api.map.on_attach.default(bufnr)
+
+      -- Remapea C a la acción de cambiar directorio
+      vim.keymap.set('n', 'C', api.tree.change_root_to_node, { buffer = bufnr, desc = 'CD' })
+    end,
   }
 
   vim.keymap.set('n', '<leader>e', '<Cmd>NvimTreeToggle<CR>', { desc = 'Toggle file [E]xplorer' })
