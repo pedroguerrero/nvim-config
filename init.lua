@@ -461,6 +461,7 @@ do
     renderer = { group_empty = true },
     filters = {
       dotfiles = false,
+      git_ignored = false,
       custom = { 'node_modules', '%.git$' },
     },
     on_attach = function(bufnr)
