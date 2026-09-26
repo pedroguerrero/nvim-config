@@ -812,6 +812,7 @@ do
     'goimports',
     'dockerfmt',
     'js-debug-adapter',
+    'shfmt',
   })
 
   require('mason-tool-installer').setup { ensure_installed = ensure_installed }
@@ -831,6 +832,7 @@ do
   vim.pack.add { gh 'stevearc/conform.nvim' }
   require('conform').setup {
     notify_on_error = false,
+    log_level = vim.log.levels.TRACE,
     format_on_save = function(bufnr)
       -- You can specify filetypes to autoformat on save here:
       local enabled_filetypes = {
@@ -845,6 +847,9 @@ do
         dockerfile = true,
         json = true,
         jsonc = true,
+        sh = true,
+        zsh = true,
+        bash = true,
       }
       if enabled_filetypes[vim.bo[bufnr].filetype] then
         return { timeout_ms = 500 }
@@ -871,6 +876,14 @@ do
       yaml = { 'prettierd', 'prettier', stop_after_first = true },
       jsonc = { 'prettierd', 'prettier', stop_after_first = true },
       json = { 'prettierd', 'prettier', stop_after_first = true },
+      sh = { 'shfmt' },
+      zsh = { 'shfmt' },
+      bash = { 'shfmt' },
+    },
+    formatters = {
+      shfmt = {
+        args = { '-i', '2', '-filename', '$FILENAME' },
+      },
     },
   }
 
