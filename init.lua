@@ -832,7 +832,6 @@ do
   vim.pack.add { gh 'stevearc/conform.nvim' }
   require('conform').setup {
     notify_on_error = false,
-    log_level = vim.log.levels.TRACE,
     format_on_save = function(bufnr)
       -- You can specify filetypes to autoformat on save here:
       local enabled_filetypes = {
@@ -850,6 +849,7 @@ do
         sh = true,
         zsh = true,
         bash = true,
+        html = true,
       }
       if enabled_filetypes[vim.bo[bufnr].filetype] then
         return { timeout_ms = 500 }
@@ -879,6 +879,7 @@ do
       sh = { 'shfmt' },
       zsh = { 'shfmt' },
       bash = { 'shfmt' },
+      html = { 'prettierd', 'prettier', stop_after_first = true },
     },
     formatters = {
       shfmt = {
