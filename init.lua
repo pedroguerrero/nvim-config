@@ -1099,6 +1099,17 @@ do
 end
 
 -- ============================================================
+-- SECTION: MARKDOWN RENDER
+-- ============================================================
+do
+  vim.pack.add { gh 'MeanderingProgrammer/render-markdown.nvim' }
+
+  require('render-markdown').setup {}
+
+  vim.keymap.set('n', '<leader>tm', '<Cmd>RenderMarkdown toggle<CR>', { desc = '[T]oggle [M]arkdown render' })
+end
+
+-- ============================================================
 -- SECTION: BUFFERLINE (tabs visuales para buffers)
 -- ============================================================
 do
